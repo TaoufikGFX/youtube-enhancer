@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enhancer+ for YouTube</title>
+  <meta name="description" content="A free, open-source browser extension for Chrome and Brave: repeat, HD thumbnails, speed and volume boost, screenshots, cinema mode, filters and a cleaner YouTube.">
+  <meta name="theme-color" content="#e0245e">
+  <meta property="og:title" content="Enhancer+ for YouTube">
+  <meta property="og:description" content="Repeat, HD thumbnails, speed & volume boost, screenshots, cinema mode and a cleaner YouTube. Free for Chrome and Brave.">
+  <meta property="og:image" content="https://taoufikgfx.github.io/youtube-enhancer/assets/banner.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
+  <script>
+    // Apply the saved theme before first paint (falls back to the system setting).
+    try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+  </script>
+  <style>
+    @font-face {
+      font-family: 'Plus Jakarta Sans';
+      font-style: normal;
+      font-weight: 200 800;
+      font-display: swap;
+      src: url('assets/fonts/PlusJakartaSans-latin.woff2') format('woff2');
+    }
+
+    :root {
+      color-scheme: light;
+      --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --accent: #f43f6b;
+      --accent-2: #9b3cf0;
+      --grad: linear-gradient(135deg, #ff4d6d 0%, #e0245e 45%, #8b2cf0 100%);
+      --grad-soft: linear-gradient(135deg, rgba(255, 77, 109, 0.14), rgba(139, 44, 240, 0.14));
+      --bg: #f6f5f9;
+      --surface: #ffffff;
+      --surface-2: #f1eff6;
+      --border: rgba(24, 16, 40, 0.09);
+      --text: #17131f;
+      --text-2: #5e5870;
+      --text-3: #938ca3;
+      --shadow: 0 1px 2px rgba(20, 12, 40, 0.05), 0 8px 24px rgba(20, 12, 40, 0.06);
+      --shadow-lg: 0 30px 80px rgba(40, 16, 70, 0.18);
+      --glow: 0.22;
+      --radius: 18px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #0f0d14;
+        --surface: #18151f;
+        --surface-2: #211d2a;
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #f3f0f8;
+        --text-2: #b3acc2;
+        --text-3: #7d768c;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+        --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.55);
+        --glow: 0.38;
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0f0d14;
+      --surface: #18151f;
+      --surface-2: #211d2a;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f3f0f8;
+      --text-2: #b3acc2;
+      --text-3: #7d768c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.55);
+      --glow: 0.38;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; overflow-x: hidden; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font: 500 16px/1.6 var(--font);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    h1, h2, h3 { margin: 0; letter-spacing: -0.025em; line-height: 1.1; }
+    p { margin: 0; }
+    .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+    .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s ease;
+    }
+    .nav.scrolled { border-bottom-color: var(--border); }
+    .nav .wrap { display: flex; align-items: center; gap: 16px; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; text-decoration: none; letter-spacing: -0.02em; }
+    .logo img { width: 32px; height: 32px; border-radius: 9px; box-shadow: 0 4px 14px rgba(224, 36, 94, 0.35); }
+    .nav-links { display: flex; gap: 4px; margin-left: auto; }
+    .nav-links a { padding: 8px 12px; border-radius: 10px; color: var(--text-2); font-size: 14.5px; font-weight: 650; text-decoration: none; transition: background 0.15s ease, color 0.15s ease; }
+    .nav-links a:hover { background: var(--surface-2); color: var(--text); }
+    .theme-btn {
+      display: grid; place-items: center; flex: none;
+      width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface); color: var(--text-2); cursor: pointer;
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
+    .theme-btn:hover { color: var(--text); }
+    .theme-btn:active { transform: scale(0.94); }
+    .theme-btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .theme-btn .sun { display: none; }
+    :root[data-theme="dark"] .theme-btn .sun { display: block; }
+    :root[data-theme="dark"] .theme-btn .moon { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .theme-btn .sun { display: block; }
+      :root:not([data-theme="light"]) .theme-btn .moon { display: none; }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 22px; border-radius: 14px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text);
+      font-weight: 750; font-size: 16px; text-decoration: none; cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.25s ease, filter 0.2s ease, border-color 0.2s ease;
+    }
+    .btn svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0) scale(0.98); }
+    .btn.primary { border: 0; background: var(--grad); color: #fff; box-shadow: 0 8px 26px rgba(224, 36, 94, 0.35); }
+    .btn.primary:hover { box-shadow: 0 14px 34px rgba(224, 36, 94, 0.45); filter: brightness(1.05); }
+    .btn.support { background: var(--grad-soft); border-color: rgba(244, 63, 107, 0.35); }
+    .btn.support:hover { border-color: rgba(244, 63, 107, 0.65); box-shadow: 0 10px 26px rgba(155, 60, 240, 0.18); }
+
+    /* Hero */
+    .hero { position: relative; padding: 72px 0 96px; overflow-x: clip; }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; z-index: -1; border-radius: 50%; filter: blur(90px); opacity: var(--glow); pointer-events: none;
+    }
+    .hero::before { width: 520px; height: 520px; left: -160px; top: -120px; background: #ff4d6d; animation: drift 14s ease-in-out infinite alternate; }
+    .hero::after { width: 560px; height: 560px; right: -180px; top: 120px; background: #8b2cf0; animation: drift 16s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { to { transform: translate(60px, 40px) scale(1.08); } }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 56px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px;
+      padding: 6px 14px 6px 8px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+      font-size: 13.5px; font-weight: 700; color: var(--text-2);
+    }
+    .badge b { padding: 2px 9px; border-radius: 999px; background: var(--grad); color: #fff; font-size: 12px; }
+    .hero-icon { width: 84px; height: 84px; margin-bottom: 24px; filter: drop-shadow(0 14px 30px rgba(224, 36, 94, 0.4)); animation: float 6s ease-in-out infinite; }
+    @keyframes float { 50% { transform: translateY(-8px) rotate(-2deg); } }
+    .hero h1 { font-size: clamp(42px, 6.4vw, 72px); font-weight: 800; }
+    .hero .lead { margin-top: 20px; max-width: 540px; font-size: clamp(17px, 2vw, 20px); color: var(--text-2); }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 26px; color: var(--text-3); font-size: 14px; font-weight: 650; }
+    .meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .meta svg { width: 16px; height: 16px; fill: var(--accent); }
+
+    .hero-shot { position: relative; justify-self: center; width: min(330px, 100%); }
+    .hero-shot img.main {
+      border-radius: 24px; box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+      transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .hero-shot:hover img.main { transform: perspective(1200px) rotateY(0) rotateX(0); }
+    :root[data-theme="dark"] .hero-shot .main.light { display: none; }
+    :root[data-theme="dark"] .hero-shot .main.dark { display: block; }
+    .hero-shot .main.dark { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .hero-shot .main.light { display: none; }
+      :root:not([data-theme="light"]) .hero-shot .main.dark { display: block; }
+    }
+
+    /* Sections */
+    section { padding: 88px 0; }
+    .eyebrow { display: inline-block; margin-bottom: 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .head { max-width: 640px; margin-bottom: 44px; }
+    .head h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; }
+    .head p { margin-top: 14px; color: var(--text-2); font-size: 18px; }
+    .center { text-align: center; margin-inline: auto; }
+
+    /* Features */
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature {
+      position: relative; padding: 26px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+    .feature::after {
+      content: ''; position: absolute; inset: 0; background: var(--grad-soft); opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+    }
+    .feature:hover { transform: translateY(-4px); border-color: rgba(244, 63, 107, 0.35); box-shadow: var(--shadow-lg); }
+    .feature:hover::after { opacity: 1; }
+    .feature .ico {
+      display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 18px;
+      border-radius: 13px; background: var(--grad-soft);
+    }
+    .feature .ico svg { width: 24px; height: 24px; fill: var(--accent); }
+    .feature h3 { font-size: 18.5px; font-weight: 750; }
+    .feature p { margin-top: 8px; color: var(--text-2); font-size: 15px; line-height: 1.55; }
+    .feature > * { position: relative; z-index: 1; }
+
+    /* Gallery */
+    .gallery-section { background: var(--surface); border-block: 1px solid var(--border); }
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 28px; border-radius: 14px; background: var(--surface-2); }
+    .tabs button {
+      padding: 9px 18px; border: 0; border-radius: 11px; background: transparent; color: var(--text-2);
+      font: 700 14.5px var(--font); cursor: pointer; transition: background 0.2s ease, color 0.2s ease;
+    }
+    .tabs button.on { background: var(--grad); color: #fff; box-shadow: 0 3px 10px rgba(224, 36, 94, 0.3); }
+    .panel { display: none; }
+    .panel.on { display: grid; animation: fade 0.45s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px); } }
+    .panel.popups { grid-template-columns: repeat(2, minmax(0, 340px)); justify-content: center; gap: 32px; align-items: start; }
+    .panel.settings { grid-template-columns: 1fr; gap: 24px; }
+    .panel figure { margin: 0; }
+    .panel img { border-radius: 18px; box-shadow: var(--shadow-lg), 0 0 0 1px var(--border); cursor: zoom-in; }
+    .panel figcaption { margin-top: 12px; text-align: center; color: var(--text-3); font-size: 14px; font-weight: 650; }
+
+    /* Install */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+    .step { position: relative; padding: 28px 24px 24px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 16px;
+      border-radius: 12px; background: var(--grad); color: #fff; font-weight: 800;
+      box-shadow: 0 6px 18px rgba(224, 36, 94, 0.3);
+    }
+    .step h3 { font-size: 17.5px; font-weight: 750; }
+    .step p { margin-top: 8px; color: var(--text-2); font-size: 15px; }
+    code { padding: 2px 7px; border-radius: 7px; background: var(--surface-2); font: 600 0.88em ui-monospace, 'SF Mono', Menlo, monospace; color: var(--text); }
+    .note { margin-top: 20px; color: var(--text-3); font-size: 14.5px; text-align: center; }
+
+    /* Support */
+    .support-card {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+      padding: 44px; border-radius: 28px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .support-card::before {
+      content: ''; position: absolute; inset: -1px; z-index: 0; background: var(--grad-soft); pointer-events: none;
+    }
+    .support-card > * { position: relative; z-index: 1; }
+    .support-card .cup { font-size: 44px; line-height: 1; margin-bottom: 14px; display: inline-block; animation: steam 3.6s ease-in-out infinite; }
+    @keyframes steam { 50% { transform: rotate(-6deg) translateY(-3px); } }
+    .support-card h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; }
+    .support-card p { margin-top: 10px; max-width: 520px; color: var(--text-2); font-size: 17px; }
+
+    /* Footer */
+    footer { padding: 40px 0 56px; border-top: 1px solid var(--border); color: var(--text-3); font-size: 14.5px; }
+    footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 6px; }
+    footer nav a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 10px; color: var(--text-2); font-weight: 650; text-decoration: none; transition: background 0.15s ease, color 0.15s ease; }
+    footer nav a:hover { background: var(--surface-2); color: var(--text); }
+    footer nav svg { width: 17px; height: 17px; fill: currentColor; }
+    .disclaimer { width: 100%; font-size: 13px; }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 24px;
+      background: rgba(8, 6, 12, 0.82); backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease; cursor: zoom-out;
+    }
+    .lightbox.open { opacity: 1; pointer-events: auto; }
+    .lightbox img { max-height: 90vh; width: auto; border-radius: 16px; transform: scale(0.96); transition: transform 0.3s ease; }
+    .lightbox.open img { transform: none; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .features .reveal:nth-child(3n + 2) { transition-delay: 0.08s; }
+    .features .reveal:nth-child(3n + 3) { transition-delay: 0.16s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    @media (max-width: 900px) {
+      .hero { padding: 40px 0 72px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .features, .steps { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .theme-btn { margin-left: auto; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 64px 0; }
+      .features, .steps { grid-template-columns: 1fr; }
+      .panel.popups { grid-template-columns: 1fr; }
+      .support-card { padding: 28px 22px; }
+      .cta .btn { flex: 1 1 100%; }
+      .hero-shot img.main { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><img src="assets/icon-512.png" alt="">Enhancer+</a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#install">Install</a>
+        <a href="#support">Support</a>
+        <a href="https://github.com/TaoufikGFX/youtube-enhancer">GitHub</a>
+      </nav>
+      <button class="theme-btn" id="theme" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2zm18 0h2a1 1 0 0 0 0-2h-2a1 1 0 0 0 0 2zM11 2v2a1 1 0 0 0 2 0V2a1 1 0 0 0-2 0zm0 18v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-2 0zM5.99 4.58a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="badge reveal"><b>v1.0.0</b> Free &amp; open source · Chrome &amp; Brave</span>
+          <img class="hero-icon reveal" src="assets/icon-512.png" alt="Enhancer+ icon">
+          <h1 class="reveal"><span class="grad-text">Enhancer+</span><br>for YouTube</h1>
+          <p class="lead reveal">Repeat any video, grab HD thumbnails, boost speed and volume, take full-resolution screenshots, and clean up the layout, all from one lightweight extension.</p>
+          <div class="cta reveal">
+            <a class="btn primary" href="https://github.com/TaoufikGFX/youtube-enhancer/releases/latest">
+              <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+              Download
+            </a>
+            <a class="btn support" href="https://ko-fi.com/taoufikmouadab">☕ Support</a>
+          </div>
+          <div class="meta reveal">
+            <span><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>No tracking</span>
+            <span><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Manifest V3</span>
+            <span><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>MIT licensed</span>
+          </div>
+        </div>
+        <div class="hero-shot reveal">
+          <img class="main light" src="assets/screenshots/popup-light.png" alt="Extension popup in light mode" width="720" height="1206">
+          <img class="main dark" src="assets/screenshots/popup-dark.png" alt="Extension popup in dark mode" width="720" height="1540">
+        </div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="head reveal">
+          <span class="eyebrow">Features</span>
+          <h2>Everything YouTube should have had</h2>
+          <p>Small, focused tools that live right in the player and the toolbar. Turn on only what you want.</p>
+        </div>
+        <div class="features">
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></span>
+            <h3>Repeat</h3>
+            <p>Replay a video 1–5 times or forever, right from the player bar. Right-click toggles unlimited.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg></span>
+            <h3>HD thumbnails</h3>
+            <p>Open the best-quality thumbnail of any video from the player, the popup or the right-click menu.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg></span>
+            <h3>Speed control</h3>
+            <p>Presets from 0.25× to 4×, scroll to fine-tune, and a default speed for every video.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg></span>
+            <h3>Quality &amp; codecs</h3>
+            <p>Preferred quality for videos, playlists and full screen. Force 30 FPS or H.264 on older hardware.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.47 4.47 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg></span>
+            <h3>Volume boost</h3>
+            <p>Up to 6× louder with a built-in limiter, plus scroll-to-change volume over the player.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9z"/></svg></span>
+            <h3>Screenshots</h3>
+            <p>Capture frames at the video's full resolution as PNG or JPG. Download, copy, or both.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></span>
+            <h3>Cinema, PiP &amp; expand</h3>
+            <p>Dim everything around the video, pop it out in Picture-in-Picture, or fill the whole window.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M19 11h-8v6h8v-6zm4 8V5c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 0H3V5h18v14z"/></svg></span>
+            <h3>Mini player</h3>
+            <p>Keep watching in a corner while you scroll to the comments, with its own size and quality.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
+            <h3>Cleaner layout</h3>
+            <p>Hide Shorts, comments, chat, related videos and end cards. Set videos per row, turn off autoplay.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20c5.52 0 10 4.03 10 9a6 6 0 0 1-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zM6.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span>
+            <h3>Video filters</h3>
+            <p>Brightness, contrast, saturation, hue, grayscale, sepia and more, plus horizontal and vertical flip.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg></span>
+            <h3>Keyboard shortcuts</h3>
+            <p>Repeat, screenshot, cinema and thumbnail on <code>Alt+Shift</code> keys, all customizable.</p>
+          </article>
+          <article class="feature reveal">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg></span>
+            <h3>Private by design</h3>
+            <p>No accounts, analytics or servers. Settings stay in your browser, with export and import for backups.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenshots" class="gallery-section">
+      <div class="wrap">
+        <div class="head center reveal" style="text-align:center">
+          <span class="eyebrow">Screenshots</span>
+          <h2>Looks at home in light and dark</h2>
+          <p>A quick popup for everyday controls and a full settings page for the rest.</p>
+        </div>
+        <div style="text-align:center" class="reveal">
+          <div class="tabs" role="tablist">
+            <button class="on" data-panel="popups" role="tab" aria-selected="true">Popup</button>
+            <button data-panel="settings" role="tab" aria-selected="false">Settings</button>
+          </div>
+        </div>
+        <div class="panel popups on reveal" id="popups">
+          <figure><img src="assets/screenshots/popup-light.png" alt="Popup in light mode" loading="lazy"><figcaption>Popup · light</figcaption></figure>
+          <figure><img src="assets/screenshots/popup-dark.png" alt="Popup in dark mode with video filters open" loading="lazy"><figcaption>Popup · dark, filters open</figcaption></figure>
+        </div>
+        <div class="panel settings" id="settings">
+          <figure><img src="assets/screenshots/options-light.png" alt="Settings page in light mode" loading="lazy"><figcaption>Settings · repeat, thumbnail and player buttons</figcaption></figure>
+          <figure><img src="assets/screenshots/options-dark.png" alt="Settings page in dark mode" loading="lazy"><figcaption>Settings · quality, codecs and mini player</figcaption></figure>
+          <figure><img src="assets/screenshots/options-filters.png" alt="Settings page showing video filters" loading="lazy"><figcaption>Settings · video filters and screenshots</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap">
+        <div class="head reveal">
+          <span class="eyebrow">Installation</span>
+          <h2>Up and running in a minute</h2>
+          <p>Works in Google Chrome and Brave (version 120 or newer).</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <h3>Download</h3>
+            <p>Get <code>youtube-enhancer-v1.0.0.zip</code> from the <a href="https://github.com/TaoufikGFX/youtube-enhancer/releases/latest">latest release</a> and extract it.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Open extensions</h3>
+            <p>Go to <code>chrome://extensions</code> or <code>brave://extensions</code> and turn on <b>Developer mode</b>.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Load unpacked</h3>
+            <p>Click <b>Load unpacked</b> and pick the extracted folder, the one with <code>manifest.json</code>.</p>
+          </div>
+        </div>
+        <p class="note reveal">Pin it from the puzzle-piece menu so the popup is always one click away.</p>
+      </div>
+    </section>
+
+    <section id="support">
+      <div class="wrap">
+        <div class="support-card reveal">
+          <div>
+            <span class="cup">☕</span>
+            <h2>Enjoying it? <span class="grad-text">Buy me a coffee</span></h2>
+            <p>If this extension saves you time, a small tip helps me keep building free tools like this one.</p>
+          </div>
+          <a class="btn primary" href="https://ko-fi.com/taoufikmouadab">☕ Support on Ko-fi</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 TaoufikGFX · MIT License</span>
+      <nav>
+        <a href="https://github.com/TaoufikGFX/youtube-enhancer"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>GitHub</a>
+        <a href="https://taoufikmouadab.com"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.93 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4h-3.38z"/></svg>Website</a>
+        <a href="https://ko-fi.com/taoufikmouadab"><svg viewBox="0 0 24 24"><path d="M2 21h18v-2H2v2zM20 8h-2V5h2v3zm0-5H4v10a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-3h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>Ko-fi</a>
+      </nav>
+      <p class="disclaimer">Not affiliated with or endorsed by YouTube or Google. YouTube is a trademark of Google LLC.</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true"><img alt=""></div>
+
+  <script>
+    // Theme toggle: flips between light and dark, remembers the choice when storage is available.
+    const root = document.documentElement;
+    document.getElementById('theme').addEventListener('click', () => {
+      const current = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch {}
+    });
+
+    // Nav border once scrolled.
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+    // Reveal on scroll.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Screenshot tabs.
+    document.querySelectorAll('.tabs button').forEach((btn) => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tabs button').forEach((b) => { b.classList.toggle('on', b === btn); b.setAttribute('aria-selected', b === btn); });
+      document.querySelectorAll('.panel').forEach((p) => {
+        const on = p.id === btn.dataset.panel;
+        p.classList.toggle('on', on);
+        if (on) p.classList.add('in');
+      });
+    }));
+
+    // Lightbox.
+    const box = document.getElementById('lightbox');
+    document.querySelectorAll('.panel img').forEach((img) => img.addEventListener('click', () => {
+      box.querySelector('img').src = img.src;
+      box.querySelector('img').alt = img.alt;
+      box.classList.add('open');
+    }));
+    box.addEventListener('click', () => box.classList.remove('open'));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') box.classList.remove('open'); });
+  </script>
+</body>
+</html>

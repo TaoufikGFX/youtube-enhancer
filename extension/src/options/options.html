@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enhancer+ for YouTube · Settings</title>
+  <link rel="icon" href="../../assets/icons/icon-32.png">
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="side-brand">
+      <img class="brand-mark" src="../../assets/icons/icon-128.png" alt="">
+      <div><b>Enhancer+</b><span class="grad-text">for YouTube</span></div>
+    </div>
+    <nav><a href="#repeat" data-nav="repeat"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg><span>Repeat & thumbnail</span></a><a href="#controls" data-nav="controls"><svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg><span>Player buttons</span></a><a href="#playback" data-nav="playback"><svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg><span>Playback</span></a><a href="#quality" data-nav="quality"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg><span>Playback quality</span></a><a href="#codecs" data-nav="codecs"><svg viewBox="0 0 24 24"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><span>Codecs & formats</span></a><a href="#miniplayer" data-nav="miniplayer"><svg viewBox="0 0 24 24"><path d="M19 11h-8v6h8v-6zm4 8V5c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 0H3V5h18v14z"/></svg><span>Mini player</span></a><a href="#pip" data-nav="pip"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg><span>Picture-in-Picture</span></a><a href="#audio" data-nav="audio"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.47 4.47 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg><span>Audio</span></a><a href="#layout" data-nav="layout"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Appearance</span></a><a href="#cinema" data-nav="cinema"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg><span>Cinema mode</span></a><a href="#filters" data-nav="filters"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20c5.52 0 10 4.03 10 9a6 6 0 0 1-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zM6.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg><span>Video filters</span></a><a href="#screenshot" data-nav="screenshot"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9z"/></svg><span>Screenshot</span></a><a href="#keyboard" data-nav="keyboard"><svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg><span>Keyboard shortcuts</span></a><a href="#backup" data-nav="backup"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg><span>Backup</span></a></nav>
+    <p class="side-foot">v<span id="version"></span> · Saved automatically</p>
+  </aside>
+
+  <main class="content">
+    <header class="hero">
+      <div>
+        <h1>Settings</h1>
+        <p>Everything saves the moment you change it and applies to open YouTube tabs instantly.</p>
+      </div>
+      <img src="../../assets/icons/icon-128.png" alt="">
+    </header>
+
+    <section class="section" id="repeat">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></span>
+        <div><h2>Repeat & thumbnail</h2><p>Your two favourites: loop any video and grab its thumbnail in a click.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Repeat mode</b><small>How many extra times the current video replays</small></span><div class="seg" data-key="repeatMode"><button data-value="0">Off</button><button data-value="1">1×</button><button data-value="2">2×</button><button data-value="3">3×</button><button data-value="4">4×</button><button data-value="5">5×</button><button data-value="-1">∞</button></div></div>
+        <label class="row"><span class="row-label"><b>Keep repeat on for next videos</b><small>When off, repeat resets to “Off” every time you open another video</small></span><input type="checkbox" class="switch" data-key="repeatRemember"></label>
+        <label class="row"><span class="row-label"><b>Thumbnail next to the channel</b><small>Click it to open the highest quality thumbnail in a new tab</small></span><input type="checkbox" class="switch" data-key="thumbnailEnabled"></label>
+      </div>
+    </section>
+
+    <section class="section" id="controls">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg></span>
+        <div><h2>Player buttons</h2><p>Choose which buttons appear in the video player’s control bar.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Quality</b><small>Auto, 480p, 720p, 1080p, 2K, 4K, 8K · right-click goes back to Auto</small></span><input type="checkbox" class="switch" data-key="btnQuality"></label>
+        <label class="row"><span class="row-label"><b>Repeat</b><small>Click for the repeat menu · right-click toggles unlimited</small></span><input type="checkbox" class="switch" data-key="btnRepeat"></label>
+        <label class="row"><span class="row-label"><b>Speed</b><small>Click for presets · scroll to fine-tune · right-click resets</small></span><input type="checkbox" class="switch" data-key="btnSpeed"></label>
+        <label class="row"><span class="row-label"><b>Volume boost</b></span><input type="checkbox" class="switch" data-key="btnBoost"></label>
+        <label class="row"><span class="row-label"><b>Screenshot</b></span><input type="checkbox" class="switch" data-key="btnScreenshot"></label>
+        <label class="row"><span class="row-label"><b>Cinema mode</b></span><input type="checkbox" class="switch" data-key="btnCinema"></label>
+        <label class="row"><span class="row-label"><b>Expand player</b><small>Fill the whole window with the video · click again for normal size</small></span><input type="checkbox" class="switch" data-key="btnExpand"></label>
+        <label class="row"><span class="row-label"><b>Picture-in-Picture</b></span><input type="checkbox" class="switch" data-key="btnPip"></label>
+        <label class="row"><span class="row-label"><b>On-screen messages</b><small>Small bubble when speed, volume or repeat changes</small></span><input type="checkbox" class="switch" data-key="osd"></label>
+      </div>
+    </section>
+
+    <section class="section" id="playback">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/></svg></span>
+        <div><h2>Playback</h2><p>Speed and autoplay behaviour.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Default speed</b><small>Applied to every new video</small></span><select class="select" data-key="speedDefault"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1">Normal</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option><option value="2.5">2.5×</option><option value="3">3×</option></select></div>
+        <div class="row"><span class="row-label"><b>Speed step</b><small>Used by the mouse wheel and shortcuts</small></span><select class="select" data-key="speedStep"><option value="0.05">0.05×</option><option value="0.1">0.1×</option><option value="0.25">0.25×</option><option value="0.5">0.5×</option></select></div>
+        <label class="row"><span class="row-label"><b>Scroll on the speed button to change speed</b></span><input type="checkbox" class="switch" data-key="speedWheel"></label>
+        <label class="row"><span class="row-label"><b>Turn off autoplay</b><small>Stops YouTube from jumping to the next video</small></span><input type="checkbox" class="switch" data-key="disableAutoplay"></label>
+      </div>
+    </section>
+
+    <section class="section" id="quality">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg></span>
+        <div><h2>Playback quality</h2><p>Pick a quality automatically. If it isn’t available, the closest lower one is used.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Videos</b></span><select class="select" data-key="quality"><option value="">Auto (YouTube decides)</option><option value="highres">4320p · 8K</option><option value="hd2880">2880p · 5K</option><option value="hd2160">2160p · 4K</option><option value="hd1440">1440p HD</option><option value="hd1080">1080p HD</option><option value="hd720">720p</option><option value="large">480p</option><option value="medium">360p</option><option value="small">240p</option><option value="tiny">144p</option></select></div>
+        <div class="row"><span class="row-label"><b>Playlists</b></span><select class="select" data-key="qualityPlaylist"><option value="">Same as videos</option><option value="highres">4320p · 8K</option><option value="hd2880">2880p · 5K</option><option value="hd2160">2160p · 4K</option><option value="hd1440">1440p HD</option><option value="hd1080">1080p HD</option><option value="hd720">720p</option><option value="large">480p</option><option value="medium">360p</option><option value="small">240p</option><option value="tiny">144p</option></select></div>
+        <label class="row"><span class="row-label"><b>Use a different quality in full screen</b></span><input type="checkbox" class="switch" data-key="qualityFullscreenOn"></label>
+        <div class="row" data-show-if="qualityFullscreenOn"><span class="row-label"><b>Full screen quality</b></span><select class="select" data-key="qualityFullscreen"><option value="highres">4320p · 8K</option><option value="hd2880">2880p · 5K</option><option value="hd2160">2160p · 4K</option><option value="hd1440">1440p HD</option><option value="hd1080">1080p HD</option><option value="hd720">720p</option><option value="large">480p</option><option value="medium">360p</option><option value="small">240p</option><option value="tiny">144p</option></select></div>
+        <label class="row" data-show-if="qualityFullscreenOn"><span class="row-label"><b>Switch back when leaving full screen</b><small>Returns to the previous quality</small></span><input type="checkbox" class="switch" data-key="qualityFullscreenRestore"></label>
+      </div>
+    </section>
+
+    <section class="section" id="codecs">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></span>
+        <div><h2>Video codecs and formats</h2><p>Lighter formats for slower computers. Reload YouTube tabs after changing these.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Force standard frame rates</b><small>Use 24, 25 or 30 FPS formats instead of 48, 50 or 60 FPS</small></span><input type="checkbox" class="switch" data-key="forceFps30"></label>
+        <label class="row"><span class="row-label"><b>Force H.264 (AVC)</b><small>Skip VP9 and AV1. Uses less CPU on older hardware, but tops out at 1080p</small></span><input type="checkbox" class="switch" data-key="forceAvc"></label>
+      </div>
+    </section>
+
+    <section class="section" id="miniplayer">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M19 11h-8v6h8v-6zm4 8V5c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2zm-2 0H3V5h18v14z"/></svg></span>
+        <div><h2>Mini player</h2><p>Keep watching in a floating player while you scroll down to read comments.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Mini player when scrolling down</b><small>Hover it for “back to video” and close buttons</small></span><input type="checkbox" class="switch" data-key="miniPlayer"></label>
+        <div class="row" data-show-if="miniPlayer"><span class="row-label"><b>Size</b></span><div class="seg" data-key="miniSize"><button data-value="small">Small</button><button data-value="medium">Medium</button><button data-value="large">Large</button></div></div>
+        <div class="row" data-show-if="miniPlayer"><span class="row-label"><b>Position</b></span><select class="select" data-key="miniPosition"><option value="bottom-right">Bottom right</option><option value="bottom-left">Bottom left</option><option value="top-right">Top right</option><option value="top-left">Top left</option></select></div>
+        <div class="row" data-show-if="miniPlayer"><span class="row-label"><b>Mini player quality</b><small>Switches back to the normal quality when the mini player closes</small></span><select class="select" data-key="miniQuality"><option value="">Keep current quality</option><option value="highres">4320p · 8K</option><option value="hd2880">2880p · 5K</option><option value="hd2160">2160p · 4K</option><option value="hd1440">1440p HD</option><option value="hd1080">1080p HD</option><option value="hd720">720p</option><option value="large">480p</option><option value="medium">360p</option><option value="small">240p</option><option value="tiny">144p</option></select></div>
+      </div>
+    </section>
+
+    <section class="section" id="pip">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M19 7h-8v6h8V7zm2-4H3c-1.1 0-2 .9-2 2v14c0 1.1.9 1.98 2 1.98h18c1.1 0 2-.88 2-1.98V5c0-1.1-.9-2-2-2zm0 16.01H3V4.98h18v14.03z"/></svg></span>
+        <div><h2>Picture-in-Picture</h2><p>Watch in a small always-on-top window while you use other apps.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Picture-in-Picture quality</b><small>Switches back to the normal quality when Picture-in-Picture closes</small></span><select class="select" data-key="pipQuality"><option value="">Keep current quality</option><option value="highres">4320p · 8K</option><option value="hd2880">2880p · 5K</option><option value="hd2160">2160p · 4K</option><option value="hd1440">1440p HD</option><option value="hd1080">1080p HD</option><option value="hd720">720p</option><option value="large">480p</option><option value="medium">360p</option><option value="small">240p</option><option value="tiny">144p</option></select></div>
+      </div>
+    </section>
+
+    <section class="section" id="audio">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.47 4.47 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg></span>
+        <div><h2>Audio</h2><p>Make quiet videos loud and control volume with the mouse wheel.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Volume boost</b><small>Amplifies the sound with a built-in limiter to avoid distortion</small></span><input type="checkbox" class="switch" data-key="boostOn"></label>
+        <div class="row"><span class="row-label"><b>Boost level</b></span><div class="range"><input type="range" min="1.5" max="6" step="0.5" data-key="boostLevel" data-unit="×"><output data-for="boostLevel"></output></div></div>
+        <label class="row"><span class="row-label"><b>Scroll over the video to change volume</b></span><input type="checkbox" class="switch" data-key="volumeWheel"></label>
+        <div class="row"><span class="row-label"><b>Volume step</b></span><div class="range"><input type="range" min="1" max="20" step="1" data-key="volumeWheelStep" data-unit="%"><output data-for="volumeWheelStep"></output></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="layout">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
+        <div><h2>Appearance</h2><p>Player size and a cleaner YouTube.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Automatically expand the video player</b><small>Fills the whole window below the top bar</small></span><input type="checkbox" class="switch" data-key="expandPlayer"></label>
+        <label class="row"><span class="row-label"><b>Hide related videos</b><small>The right column disappears when nothing else is in it</small></span><input type="checkbox" class="switch" data-key="hideRelated"></label>
+        <label class="row"><span class="row-label"><b>Hide chat</b><small>Live chat and chat replays</small></span><input type="checkbox" class="switch" data-key="hideChat"></label>
+        <label class="row"><span class="row-label"><b>Hide comments</b></span><input type="checkbox" class="switch" data-key="hideComments"></label>
+        <label class="row"><span class="row-label"><b>Hide Shorts</b><small>Removes Shorts shelves, cards and the sidebar entry</small></span><input type="checkbox" class="switch" data-key="hideShorts"></label>
+        <label class="row"><span class="row-label"><b>Hide end screens and info cards</b></span><input type="checkbox" class="switch" data-key="hideEndscreen"></label>
+        <div class="row"><span class="row-label"><b>Videos per row</b><small>Home and subscription grids</small></span><select class="select" data-key="videosPerRow"><option value="0">Auto</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div>
+        <label class="row"><span class="row-label"><b>Expand video descriptions automatically</b></span><input type="checkbox" class="switch" data-key="expandDescription"></label>
+      </div>
+    </section>
+
+    <section class="section" id="cinema">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></span>
+        <div><h2>Cinema mode</h2><p>Dim the page around the player. Press Esc or click the dark area to exit.</p></div>
+      </div>
+      <div class="card">
+        <label class="row"><span class="row-label"><b>Turn on cinema mode automatically</b></span><input type="checkbox" class="switch" data-key="cinemaAuto"></label>
+        <div class="row"><span class="row-label"><b>Darkness</b></span><div class="range"><input type="range" min="40" max="100" step="5" data-key="cinemaOpacity" data-unit="%"><output data-for="cinemaOpacity"></output></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="filters">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20c5.52 0 10 4.03 10 9a6 6 0 0 1-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22zM6.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3-4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm3 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg></span>
+        <div><h2>Video filters</h2><p>Colour-correct any video. Screenshots include these filters.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Brightness</b></span><div class="range"><input type="range" min="30" max="200" step="1" data-key="filterBrightness" data-unit="%"><output data-for="filterBrightness"></output></div></div>
+        <div class="row"><span class="row-label"><b>Contrast</b></span><div class="range"><input type="range" min="30" max="200" step="1" data-key="filterContrast" data-unit="%"><output data-for="filterContrast"></output></div></div>
+        <div class="row"><span class="row-label"><b>Saturation</b></span><div class="range"><input type="range" min="0" max="300" step="1" data-key="filterSaturate" data-unit="%"><output data-for="filterSaturate"></output></div></div>
+        <div class="row"><span class="row-label"><b>Hue rotation</b></span><div class="range"><input type="range" min="0" max="360" step="1" data-key="filterHue" data-unit="°"><output data-for="filterHue"></output></div></div>
+        <div class="row"><span class="row-label"><b>Grayscale</b></span><div class="range"><input type="range" min="0" max="100" step="1" data-key="filterGrayscale" data-unit="%"><output data-for="filterGrayscale"></output></div></div>
+        <div class="row"><span class="row-label"><b>Sepia</b></span><div class="range"><input type="range" min="0" max="100" step="1" data-key="filterSepia" data-unit="%"><output data-for="filterSepia"></output></div></div>
+        <div class="row"><span class="row-label"><b>Invert</b></span><div class="range"><input type="range" min="0" max="100" step="1" data-key="filterInvert" data-unit="%"><output data-for="filterInvert"></output></div></div>
+        <div class="row"><span class="row-label"><b>Blur</b></span><div class="range"><input type="range" min="0" max="10" step="0.5" data-key="filterBlur" data-unit="px"><output data-for="filterBlur"></output></div></div>
+        <label class="row"><span class="row-label"><b>Flip horizontally</b></span><input type="checkbox" class="switch" data-key="flipH"></label>
+        <label class="row"><span class="row-label"><b>Flip vertically</b></span><input type="checkbox" class="switch" data-key="flipV"></label>
+        <div class="row end"><button class="btn" id="reset-filters">Reset filters</button></div>
+      </div>
+    </section>
+
+    <section class="section" id="screenshot">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9z"/></svg></span>
+        <div><h2>Screenshot</h2><p>Capture frames at the video’s full resolution.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Format</b></span><div class="seg" data-key="screenshotFormat"><button data-value="png">PNG</button><button data-value="jpeg">JPG</button></div></div>
+        <div class="row"><span class="row-label"><b>After capture</b></span><div class="seg" data-key="screenshotAction"><button data-value="download">Download</button><button data-value="copy">Copy</button><button data-value="both">Both</button></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="keyboard">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/></svg></span>
+        <div><h2>Keyboard shortcuts</h2><p>Default keys. Change them any time in Chrome’s shortcut page.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Toggle repeat (off / unlimited)</b></span><kbd>Alt+Shift+R</kbd></div>
+        <div class="row"><span class="row-label"><b>Take a screenshot</b></span><kbd>Alt+Shift+S</kbd></div>
+        <div class="row"><span class="row-label"><b>Toggle cinema mode</b></span><kbd>Alt+Shift+C</kbd></div>
+        <div class="row"><span class="row-label"><b>Open the thumbnail in best quality</b></span><kbd>Alt+Shift+T</kbd></div>
+        <div class="row"><span class="row-label"><b>More shortcuts</b><small>Speed up/down/reset, volume boost, Picture-in-Picture and settings can be assigned too</small></span><button class="btn" id="open-shortcuts">Customize</button></div>
+      </div>
+    </section>
+
+    <section class="section" id="backup">
+      <div class="section-head">
+        <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg></span>
+        <div><h2>Backup</h2><p>Move your setup between computers.</p></div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="row-label"><b>Export settings</b><small>Save a backup file of everything on this page</small></span><button class="btn" id="export">Export</button></div>
+        <div class="row"><span class="row-label"><b>Import settings</b><small>Restore from a backup file</small></span><label class="btn">Import<input type="file" id="import" accept="application/json,.json" hidden></label></div>
+        <div class="row"><span class="row-label"><b>Reset everything</b><small>Return all settings to their defaults</small></span><button class="btn danger" id="reset-all">Reset</button></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast">Saved</div>
+
+  <script src="../shared/defaults.js"></script>
+  <script src="../shared/bind.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

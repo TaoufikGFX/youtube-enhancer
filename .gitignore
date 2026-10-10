@@ -1,0 +1,21 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.directory
+*~
+*.bak
+*.swp
+.vscode/
+.idea/
+
+# Dependencies and builds
+node_modules/
+dist/
+
+# Local release builds (upload them to GitHub Releases instead)
+*.zip
+!youtube-enhancer-v1.0.0.zip
+
+# Logs and notes
+*.log
+.claude/
