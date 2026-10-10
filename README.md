@@ -6,7 +6,7 @@
 
 **Repeat, HD thumbnails, speed & volume boost, screenshots, cinema mode, filters, and a cleaner YouTube.**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-f43f6b?style=flat-square)](https://github.com/TaoufikGFX/youtube-enhancer/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.0.1-f43f6b?style=flat-square)](https://github.com/TaoufikGFX/youtube-enhancer/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-9b3cf0?style=flat-square)](LICENSE)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-e0245e?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 [![Chrome](https://img.shields.io/badge/Chrome-supported-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](#-installation)
@@ -48,7 +48,7 @@
 
 ## 📦 Installation
 
-1. Download `youtube-enhancer-v1.0.0.zip` from the [latest release](https://github.com/TaoufikGFX/youtube-enhancer/releases/latest) and extract it.
+1. Download `youtube-enhancer-v1.0.1.zip` from the [latest release](https://github.com/TaoufikGFX/youtube-enhancer/releases/latest) and extract it.
 2. Open `chrome://extensions` (Chrome) or `brave://extensions` (Brave).
 3. Turn on **Developer mode** (top right), click **Load unpacked**, and select the extracted folder (the one that contains `manifest.json`).
 

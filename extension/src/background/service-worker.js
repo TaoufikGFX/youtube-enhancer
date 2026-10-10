@@ -1,8 +1,3 @@
-// Extension Manager: lets the manager reload this extension from disk (keep at the top level).
-chrome.runtime.onMessageExternal.addListener((msg, _sender, reply) => {
-  if (msg?.type === 'ext-manager:reload') { reply({ ok: true }); setTimeout(() => chrome.runtime.reload(), 50); }
-});
-
 importScripts('/src/shared/defaults.js');
 
 const THUMB_SIZES = ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault', 'default'];

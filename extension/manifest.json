@@ -3,7 +3,7 @@
   "name": "Enhancer+ for YouTube",
   "short_name": "Enhancer+",
   "description": "Repeat videos, open HD thumbnails, speed & volume boost, screenshots, cinema mode, filters and a cleaner YouTube.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minimum_chrome_version": "120",
   "icons": {
     "16": "assets/icons/icon-16.png",

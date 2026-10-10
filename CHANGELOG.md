@@ -2,6 +2,11 @@
 
 All notable changes to **Enhancer+ for YouTube** are listed here.
 
+## v1.0.1 (2026-10-10)
+
+### Removed
+- Removed internal dev reload hook from public build
+
 ## v1.0.0 (2026-10-10)
 
 First public release.

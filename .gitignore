@@ -14,7 +14,7 @@ dist/
 
 # Local release builds (upload them to GitHub Releases instead)
 *.zip
-!youtube-enhancer-v1.0.0.zip
+!youtube-enhancer-v1.0.1.zip
 
 # Logs and notes
 *.log
